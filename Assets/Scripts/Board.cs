@@ -71,17 +71,18 @@ public class Board : MonoBehaviour
     private void ClearPieceAt(int x, int y)
     {
         var pieceToClear = Pieces[x, y];
-        Destroy(pieceToClear.gameObject);
+        pieceToClear.Remove(true);
         Pieces[x, y] = null;
     }
 
     public Piece CreatePieceAt(int x, int y)
     {
         var selectedPiece = availablePieces[UnityEngine.Random.Range(0, availablePieces.Length)];
-        var o = Instantiate(selectedPiece, new Vector3(x, y, -5), Quaternion.identity);
+        var o = Instantiate(selectedPiece, new Vector3(x, y + 1, -5), Quaternion.identity);
         o.transform.parent = transform;
         Pieces[x, y] = o.GetComponent<Piece>();
         Pieces[x, y].Setup(x, y, this);
+        Pieces[x, y].Move(x, y);
         return Pieces[x, y];
     }
 
@@ -250,6 +251,7 @@ public class Board : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             StartCoroutine(SetupPieces());
+            swappingPieces = false;
         }
         yield return null;
     }
