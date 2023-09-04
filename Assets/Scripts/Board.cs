@@ -94,13 +94,12 @@ public class Board : MonoBehaviour
     {
         if (startTile != null && endTile != null && IsCloseTo(startTile, endTile))
         {
-            SwapTiles();
+            StartCoroutine(SwapTiles());
         }
-        startTile = null;
-        endTile = null;
+        
     }
 
-    private void SwapTiles()
+    IEnumerator SwapTiles()
     {
         var StarPiece = Pieces[startTile.x, startTile.y];
         var EndPiece = Pieces[endTile.x, endTile.y];
@@ -111,8 +110,39 @@ public class Board : MonoBehaviour
         Pieces[startTile.x, startTile.y] = EndPiece;
         Pieces[endTile.x, endTile.y] = StarPiece;
 
+        yield return new WaitForSeconds(0.6f);
 
+        bool foundMatch = false;
+        var startMatches = GetMatchByPiece(startTile.x, startTile.y, 3);
+        var endMatches = GetMatchByPiece(endTile.x, endTile.y, 3);
 
+        startMatches.ForEach(piece =>
+        {
+            foundMatch = true;
+            Pieces[piece.x, piece.y] = null;
+            Destroy(piece.gameObject);
+        });
+
+        endMatches.ForEach(piece =>
+        {
+            foundMatch = true;
+            Pieces[piece.x, piece.y] = null;
+            Destroy(piece.gameObject);
+        });
+
+        if (!foundMatch)
+        {
+            StarPiece.Move(startTile.x, startTile.y);
+            EndPiece.Move(endTile.x, endTile.y);
+            Pieces[startTile.x, startTile.y] = StarPiece;
+            Pieces[endTile.x, endTile.y] = EndPiece;
+        }
+
+        startTile = null;
+        endTile = null;
+        swappingPieces = false;
+
+        yield return null;
     }
 
     public bool IsCloseTo(Tile start, Tile end)
@@ -141,7 +171,7 @@ public class Board : MonoBehaviour
         for(int i = 1; i < maxVal; i++)
         {
             nextX = xpos + ((int)direction.x * i);
-            nextY = ypos * ((int)direction.y * i);
+            nextY = ypos + ((int)direction.y * i);
             if(nextX >= 0 && nextX < width && nextY >= 0 && nextY < height)
             {
                 var nextPiece = Pieces[nextX, nextY];
