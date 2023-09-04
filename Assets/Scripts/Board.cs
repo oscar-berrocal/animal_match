@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -20,6 +21,8 @@ public class Board : MonoBehaviour
 
     Tile startTile;
     Tile endTile;
+
+    bool swappingPieces = false;
 
     // Start is called before the first frame update
     void Start()
@@ -88,7 +91,7 @@ public class Board : MonoBehaviour
 
     public void TileUp(Tile tile_)
     {
-        if (startTile != null && endTile != null)
+        if (startTile != null && endTile != null && IsCloseTo(startTile, endTile))
         {
             SwapTiles();
         }
@@ -106,5 +109,21 @@ public class Board : MonoBehaviour
 
         Pieces[startTile.x, startTile.y] = EndPiece;
         Pieces[endTile.x, endTile.y] = StarPiece;
+
+
+
+    }
+
+    public bool IsCloseTo(Tile start, Tile end)
+    {
+        if (Math.Abs((start.x - end.x)) == 1 && start.y == end.y)
+        {
+            return true;
+        }
+        if (Math.Abs((start.y - end.y)) == 1 && start.x == end.x)
+        {
+            return true;
+        }
+        return false;
     }
 }
