@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public float timeToMatch = 10f;
-    public float currentTimeToMatch 0 0;
+    public float currentTimeToMatch = 0;
 
     public enum GameState
     {
