@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 630541476}
   - component: {fileID: 630541475}
   m_Layer: 5
-  m_Name: BTN_Exit
+  m_Name: BTN_ExitGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -844,7 +844,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 630541476}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2137946919}
+        m_TargetAssemblyTypeName: UIGameOver, Assembly-CSharp
+        m_MethodName: ExitGameBtnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &630541476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1550,7 +1562,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1299841784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2137946919}
+        m_TargetAssemblyTypeName: UIGameOver, Assembly-CSharp
+        m_MethodName: PlayAgaintBtnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1299841784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1806,6 +1830,9 @@ MonoBehaviour:
   OnPointsUpdate:
     m_PersistentCalls:
       m_Calls: []
+  OnGameStateUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1862472682
 Transform:
   m_ObjectHideFlags: 0
@@ -1900,6 +1927,8 @@ GameObject:
   - component: {fileID: 2137946915}
   - component: {fileID: 2137946917}
   - component: {fileID: 2137946916}
+  - component: {fileID: 2137946918}
+  - component: {fileID: 2137946919}
   m_Layer: 5
   m_Name: UIGameOver
   m_TagString: Untagged
@@ -1966,3 +1995,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2137946914}
   m_CullTransparentMesh: 1
+--- !u!114 &2137946918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137946914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110f555b7865a384d92f98475471d9d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containerRect: {fileID: 1134158003}
+  containerCanvas: {fileID: 1134158006}
+  background: {fileID: 2137946916}
+  visibleState: 2
+  transitionTime: 1.2
+--- !u!114 &2137946919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137946914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2c237c605cef9f4889615c1dd70d340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayedpoints: 0
+  pointsUI: {fileID: 1043817228}
