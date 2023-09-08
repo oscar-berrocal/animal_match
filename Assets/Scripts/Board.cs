@@ -38,7 +38,29 @@ public class Board : MonoBehaviour
 
         SetupBoard();
         PositionCamera();
-        StartCoroutine(SetupPieces());
+
+        if(GameManager.Instance.gameState == GameManager.GameState.InGame)
+        {
+            StartCoroutine(SetupPieces());
+        }
+        GameManager.Instance.OnGameStateUpdate.AddListener(OnGameStateUpdate);
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnGameStateUpdate.RemoveListener(OnGameStateUpdate);
+    }
+
+    private void OnGameStateUpdate(GameManager.GameState newState)
+    {
+        if(newState == GameManager.GameState.InGame)
+        {
+            StartCoroutine(SetupPieces());
+        }
+        if(newState == GameManager.GameState.GameOver)
+        {
+            ClearAllPieces();
+        }
     }
 
     private IEnumerator SetupPieces()
@@ -75,6 +97,17 @@ public class Board : MonoBehaviour
         var pieceToClear = Pieces[x, y];
         pieceToClear.Remove(true);
         Pieces[x, y] = null;
+    }
+
+    private void ClearAllPieces()
+    {
+        for(int x = 0; x < width; x++)
+        {
+            for(int y = 0; y < height; y++)
+            {
+                ClearPieceAt(x, y);
+            }
+        }
     }
 
     public Piece CreatePieceAt(int x, int y)
